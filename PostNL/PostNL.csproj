@@ -11,7 +11,6 @@
         <PackageIcon>postnl-logo.png</PackageIcon>
         <RepositoryUrl>https://github.com/LJFloor/PostNL/</RepositoryUrl>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>PostNLApi</PackageId>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <AssemblyName>PostNLApi</AssemblyName>
