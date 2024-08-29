@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostNL", "PostNL\PostNL.csproj", "{D6673A31-CC73-464A-9152-F98D366C86CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostNL.Tests", "PostNL.Tests\PostNL.Tests.csproj", "{FE6C9748-12D7-480E-9EF5-0151009718CF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D6673A31-CC73-464A-9152-F98D366C86CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6673A31-CC73-464A-9152-F98D366C86CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6673A31-CC73-464A-9152-F98D366C86CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6673A31-CC73-464A-9152-F98D366C86CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE6C9748-12D7-480E-9EF5-0151009718CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE6C9748-12D7-480E-9EF5-0151009718CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE6C9748-12D7-480E-9EF5-0151009718CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE6C9748-12D7-480E-9EF5-0151009718CF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

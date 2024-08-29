@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+        <Title>PostNLApi</Title>
+        <Authors>LJFloor</Authors>
+        <Description>A package to register PostNL shipments (including multicollo)</Description>
+        <PackageProjectUrl>https://github.com/LJFloor/PostNL/</PackageProjectUrl>
+        <PackageIcon>postnl-logo.png</PackageIcon>
+        <RepositoryUrl>https://github.com/LJFloor/PostNL/</RepositoryUrl>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>PostNLApi</PackageId>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <AssemblyName>PostNLApi</AssemblyName>
+        <RootNamespace>PostNLApi</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="13.10.0" />
+      <PackageReference Include="MiniValidation" Version="0.9.1" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+      <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="postnl-logo.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
+      <None Include="..\README.md" Pack="true" PackagePath="\"/>
+    </ItemGroup>
+
+</Project>
