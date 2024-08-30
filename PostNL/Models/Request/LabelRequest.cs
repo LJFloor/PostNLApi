@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
 namespace PostNLApi.Models.Request
@@ -8,13 +9,13 @@ namespace PostNLApi.Models.Request
     /// </summary>
     public class LabelRequest
     {
-        [JsonRequired]
+        [Required]
         public Customer Customer { get; set; }
 
-        [JsonRequired]
+        [Required]
         public List<Shipment> Shipments { get; set; }
 
-        [JsonRequired]
+        [Required]
         public Message Message { get; set; } = new Message();
 
         /// <summary>

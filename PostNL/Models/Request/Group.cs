@@ -10,7 +10,7 @@ namespace PostNLApi.Models.Request
         /// </summary>
         /// <remarks>Possible values are 01 (Collection request), 03 (Multicollo) and 04 (Single parcel)</remarks>
         [RegularExpression("^01|03|04$", ErrorMessage = "Invalid group type. Possible values are 01 (Collection request), 03 (Multicollo) and 04 (Single parcel)")]
-        [JsonRequired]
+        [Required]
         public string GroupType { get; set; }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace PostNLApi.Models.Request
         /// <remarks>Mandatory for multicollo shipments</remarks>
         [MinLength(11)]
         [MaxLength(15)]
-        [JsonRequired]
+        [Required]
         public string MainBarcode { get; set; }
     }
 }

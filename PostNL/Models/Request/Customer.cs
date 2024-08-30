@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace PostNLApi.Models.Request
 {
@@ -23,14 +23,14 @@ namespace PostNLApi.Models.Request
         /// Customer code as known at PostNL Pakketten
         /// </summary>
         /// <example>DEVC</example>
-        [JsonRequired]
+        [Required]
         public string CustomerCode { get; set; }
 
         /// <summary>
         /// Customer number
         /// </summary>
         /// <example>11223344</example>
-        [JsonRequired]
+        [Required]
         public string CustomerNumber { get; set; }
 
         /// <summary>

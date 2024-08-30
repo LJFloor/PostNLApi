@@ -13,7 +13,7 @@ namespace PostNLApi.Models.Request
         /// </summary>
         /// <remarks>Please refer to <see cref="Request.AddressType"/> for the possible values.</remarks>
         [RegularExpression("^01|02|03|04|07|08|09$", ErrorMessage = "Invalid address type")]
-        [JsonRequired]
+        [Required]
         public string AddressType { get; set; }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace PostNLApi.Models.Request
         /// <example>NL</example>
         /// <remarks>https://www.iso.org/home.html</remarks>
         [RegularExpression("^[A-Za-z]{2}$", ErrorMessage = "Country code must be 2 letters")]
-        [JsonRequired]
+        [Required]
         public string CountryCode { get; set; }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace PostNLApi.Models.Request
         /// </summary>
         /// <example>3</example>
         [MaxLength(35)]
-        [JsonRequired]
+        [Required]
         public string HouseNr { get; set; }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace PostNLApi.Models.Request
         /// </summary>
         /// <example>Waldorpstraat</example>
         [MaxLength(35)]
-        [JsonRequired]
+        [Required]
         public string Street { get; set; }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace PostNLApi.Models.Request
         /// </summary>
         /// <example>2521CA</example>
         [MaxLength(17)]
-        [JsonRequired]
+        [Required]
         public string Zipcode { get; set; }
     }
 

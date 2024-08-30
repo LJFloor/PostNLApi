@@ -11,7 +11,7 @@ namespace PostNLApi.Models.Request
         /// List of 1 or more Address type elements
         /// </summary>
         /// <remarks>At least 1 address type is mandatory. See Address types for the available types.</remarks>
-        [JsonRequired]
+        [Required]
         public IEnumerable<Address> Addresses { get; set; } = new List<Address>();
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace PostNLApi.Models.Request
         /// Dimension of the parcel
         /// </summary>
         /// <remarks>The maximum dimensions can be found in your PostNL contract.</remarks>
-        [JsonRequired]
+        [Required]
         public Dimension Dimension { get; set; }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace PostNLApi.Models.Request
         /// </summary>
         /// <example>3085</example>
         [RegularExpression(@"^\d{4,5}$", ErrorMessage = "Product code must be 4 or 5 digits")]
-        [JsonRequired]
+        [Required]
         public string ProductCodeDelivery { get; set; }
 
         /// <summary>

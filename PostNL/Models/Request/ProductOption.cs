@@ -10,7 +10,7 @@ namespace PostNLApi.Models.Request
         /// </summary>
         /// <example>118</example>
         [JsonProperty("characteristic")]
-        [JsonRequired]
+        [Required]
         [RegularExpression("^\\d{3}$")]
         public string Characteristic { get; set; }
 
@@ -20,7 +20,7 @@ namespace PostNLApi.Models.Request
         /// <example>006</example>
         [RegularExpression("^\\d{3}$")]
         [JsonProperty("option")]
-        [JsonRequired]
+        [Required]
         public string Option { get; set; }
     }
 }

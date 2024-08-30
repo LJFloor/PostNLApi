@@ -13,7 +13,7 @@ namespace PostNLApi.Models.Request
         /// </summary>
         /// <remarks>Please refer to <see cref="Request.ContactType"/> for the possible values.</remarks>
         [RegularExpression("^01|02$", ErrorMessage = "Invalid contact type")]
-        [JsonRequired]
+        [Required]
         public string ContactType { get; set; }
     }
 

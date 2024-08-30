@@ -45,7 +45,7 @@ namespace PostNLApi.Models.Request
         /// </summary>
         [RegularExpression("^Gift|Documents|Commercial Goods|Commercial Sample|Returned Goods$",
             ErrorMessage = "Invalid shipment type. Possible values: Gift,Documents,Commercial Goods,Commercial Sample,Returned Goods")]
-        [JsonRequired]
+        [Required]
         public string ShipmentType { get; set; }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace PostNLApi.Models.Request
         /// The contents of the shipment.
         /// </summary>
         /// <remarks>The contents of the shipment. This section is mandatory (minimum once, maximum 5).</remarks>
-        [JsonRequired]
+        [Required]
         public Content[] Content { get; set; }
     }
 }

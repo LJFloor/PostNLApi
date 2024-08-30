@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace PostNLApi.Models.Request
 {
@@ -33,7 +33,7 @@ namespace PostNLApi.Models.Request
         /// </summary>
         /// <remarks>Approximate weight suffices</remarks>
         /// <example>2000</example>
-        [JsonRequired]
+        [Required]
         public int Weight { get; set; }
     }
 }

@@ -20,7 +20,7 @@ namespace PostNLApi.Models.Request
         /// <summary>
         /// Net weight of goods in gram(gr)
         /// </summary>
-        [JsonRequired]
+        [Required]
         public int Weight { get; set; }
 
         /// <summary>
