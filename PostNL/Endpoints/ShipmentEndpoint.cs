@@ -163,6 +163,22 @@ namespace PostNLApi.Endpoints
             {
                 address.Zipcode = address.Zipcode?.Replace(" ", "");
             }
+            
+            foreach (var amount in shipment.Amounts)
+            {
+                amount.Bic = amount.Bic?.Replace(" ", "").ToUpper();
+                amount.Iban = amount.Iban?.Replace(" ", "").ToUpper();
+                amount.Currency = amount.Currency?.ToUpper();
+            }
+
+            // Length, Width, Height values are about the order of the size and need to be filled in from the longest to the shortest value.
+            // For example: shipment's official height is 700mm, width 500mm, length 300mm. The longest side (highest value) of 700mm needs to be entered at Length.
+            // Width value becomes 500mm, Height value: 300mm (the lowest).
+            var values = new[] { shipment.Dimension.Length, shipment.Dimension.Width, shipment.Dimension.Height };
+            Array.Sort(values);
+            shipment.Dimension.Length = values[2];
+            shipment.Dimension.Width = values[1];
+            shipment.Dimension.Height = values[0];
         }
 
         private static void ValidateRequest(LabelRequest request)
@@ -180,7 +196,6 @@ namespace PostNLApi.Endpoints
                         throw new ValidationException("For multicollo shipment, addresses with the same address type must have the same address details");
                 }
             }
-
 
             var serialized = JsonConvert.SerializeObject(request);
             if (serialized.Length > 200000)

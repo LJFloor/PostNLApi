@@ -3,23 +3,27 @@
 namespace PostNLApi.Models.Request
 {
     /// <summary>
-    /// Parcle dimension for PostNL
+    /// Parcel dimension for PostNL
     /// </summary>
+    /// <remarks>https://developer.postnl.nl/docs/#/http/models/structures/dimension</remarks>
     public class Dimension
     {
         /// <summary>
         /// Height in mm
         /// </summary>
+        [Range(0, int.MaxValue)]
         public int Height { get; set; }
 
         /// <summary>
         /// Length in mm
         /// </summary>
+        [Range(0, int.MaxValue)]
         public int Length { get; set; }
 
         /// <summary>
         /// Width in mm
         /// </summary>
+        [Range(0, int.MaxValue)]
         public int Width { get; set; }
 
         /// <summary>
@@ -33,7 +37,7 @@ namespace PostNLApi.Models.Request
         /// </summary>
         /// <remarks>Approximate weight suffices</remarks>
         /// <example>2000</example>
-        [Required]
+        [Range(1, int.MaxValue)]
         public int Weight { get; set; }
     }
 }

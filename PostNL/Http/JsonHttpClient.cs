@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net.Http;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 using MiniValidation;
 using Newtonsoft.Json;
 using PostNLApi.Exceptions;
+using PostNLApi.Json;
 
 namespace PostNLApi.Http
 {
@@ -19,12 +21,22 @@ namespace PostNLApi.Http
 
         private readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
         {
-            NullValueHandling = NullValueHandling.Ignore
+            NullValueHandling = NullValueHandling.Ignore,
+            Converters = new List<JsonConverter>
+            {
+                new PostNLStringTrimmer()
+            }
         };
 
         private readonly JsonSerializerSettings _jsonSerializerSettingsDebug = new JsonSerializerSettings
         {
             NullValueHandling = NullValueHandling.Ignore,
+            Converters = new List<JsonConverter>
+            {
+                new PostNLStringTrimmer()
+            },
+
+
             Formatting = Formatting.Indented,
         };
 
@@ -82,12 +94,12 @@ namespace PostNLApi.Http
         {
             _client.WriteDebugMessage($"{(int)response.StatusCode} {response.ReasonPhrase}");
             var responseString = await response.Content.ReadAsStringAsync();
-            
+
             if (responseString.StartsWith("{") || responseString.StartsWith("["))
             {
                 responseString = JsonConvert.SerializeObject(JsonConvert.DeserializeObject(responseString), _jsonSerializerSettingsDebug);
             }
-            
+
             _client.WriteDebugMessage($"Response is {responseString.Length} characters long:{Environment.NewLine}{responseString}");
 
             if (!response.IsSuccessStatusCode)

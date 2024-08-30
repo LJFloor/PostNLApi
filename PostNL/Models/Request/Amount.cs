@@ -27,8 +27,7 @@ namespace PostNLApi.Models.Request
         [MinLength(8)]
         [MaxLength(11)]
         public string Bic { get; set; }
-
-        // TODO: capitalize in sanitized version
+        
         /// <summary>
         /// Currency code
         /// </summary>
@@ -40,7 +39,6 @@ namespace PostNLApi.Models.Request
         /// IBAN bank account number
         /// </summary>
         /// <remarks>Mandatory for COD shipments. Dutch IBAN numbers are 18 characters</remarks>
-        // TODO: capitalize in sanitized version and remove spaces
         [RegularExpression(@"^[A-Z]{2}\d{2}[A-Z]{4}(\d|\s)*$", ErrorMessage = "Invalid IBAN")]
         [JsonProperty("IBAN")]
         public string Iban { get; set; }

@@ -56,10 +56,37 @@ namespace PostNLApi.Models.Request
         public IEnumerable<Contact> Contacts { get; set; } = new List<Contact>();
 
         /// <summary>
+        /// Content of the shipment
+        /// </summary>
+        /// <remarks>Mandatory for Extra@Home shipments</remarks>
+        [MaxLength(35)]
+        public string Content { get; set; }
+
+        /// <summary>
+        /// Cost center of the shipment
+        /// </summary>
+        /// <remarks>This value will appear on your invoice</remarks>
+        [MaxLength(35)]
+        public string CostCenter { get; set; }
+
+        /// <summary>
         /// Order number of the customer
         /// </summary>
         [MaxLength(35)]
         public string CustomerOrderNumber { get; set; }
+
+        /// <summary>
+        /// Customs information for non-EU shipments
+        /// </summary>
+        /// <remarks>The Customs type is mandatory for non-EU shipments and not allowed for any other shipment types.</remarks>
+        public Customs Customs { get; set; }
+
+        /// <summary>
+        /// Delivery date of the shipment
+        /// </summary>
+        /// <remarks>Mandatory when using Mailbox Parcels (for generation of the coding rule) and delivery options like Evening/Morning/Sameday delivery etc.</remarks>
+        [JsonConverter(typeof(PostNLDateTimeJsonConverter))]
+        public DateTime? DeliveryDate { get; set; }
 
         /// <summary>
         /// Dimension of the parcel
@@ -81,12 +108,6 @@ namespace PostNLApi.Models.Request
         /// </summary>
         /// <remarks>Mandatory for multicollo shipments</remarks>
         public Group[] Groups { get; set; }
-
-        /// <summary>
-        /// Customs information for non-EU shipments
-        /// </summary>
-        /// <remarks>The Customs type is mandatory for non-EU shipments and not allowed for any other shipment types.</remarks>
-        public Customs Customs { get; set; }
 
         /// <summary>
         /// Product options for the shipment
