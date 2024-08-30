@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
+using PostNLApi.Json;
 
 namespace PostNLApi.Models.Request
 {
@@ -12,7 +13,13 @@ namespace PostNLApi.Models.Request
         /// </summary>
         /// <remarks>At least 1 address type is mandatory. See Address types for the available types.</remarks>
         [Required]
-        public IEnumerable<Address> Addresses { get; set; } = new List<Address>();
+        public List<Address> Addresses { get; set; } = new List<Address>();
+
+        /// <summary>
+        /// List of amount types. An amount represents a value of the shipment. Amount type 01 mandatory for COD-shipments, Amount type 02 mandatory for domestic insured shipments.
+        /// </summary>
+        /// <remarks>https://developer.postnl.nl/docs/#/http/reference-data/reference-codes/amount-types</remarks>
+        public List<Amount> Amounts { get; set; } = new List<Amount>();
 
         /// <summary>
         /// Barcode of the shipment. This is a unique value
@@ -29,6 +36,18 @@ namespace PostNLApi.Models.Request
         /// <remarks>Please note that this must be provided when using the Confirm API to confirm shipments where coding texts are required (e.g. letterbox parcels).</remarks>
         [MaxLength(35)]
         public string CodingText { get; set; }
+
+        /// <summary>
+        /// Starting date/time of the collection of the shipment.
+        /// </summary>
+        [JsonConverter(typeof(PostNLDateTimeJsonConverter))]
+        public DateTime? CollectionTimeStampStart { get; set; }
+
+        /// <summary>
+        /// Ending date/time of the collection of the shipment.
+        /// </summary>
+        [JsonConverter(typeof(PostNLDateTimeJsonConverter))]
+        public DateTime? CollectionTimeStampEnd { get; set; }
 
         /// <summary>
         /// One or more ContactType elements belonging to a shipment.

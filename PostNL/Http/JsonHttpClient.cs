@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -14,10 +15,25 @@ namespace PostNLApi.Http
     /// </summary>
     public class JsonHttpClient : HttpClient
     {
+        private readonly PostNLClient _client;
+
         private readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
         {
             NullValueHandling = NullValueHandling.Ignore
         };
+
+        private readonly JsonSerializerSettings _jsonSerializerSettingsDebug = new JsonSerializerSettings
+        {
+            NullValueHandling = NullValueHandling.Ignore,
+            Formatting = Formatting.Indented,
+        };
+
+        public JsonHttpClient(PostNLClient client)
+        {
+            _client = client;
+            DefaultRequestHeaders.Add("Accept", "application/json");
+            DefaultRequestHeaders.Add("User-Agent", "PostNLApi/v1.0.0");
+        }
 
         /// <summary>
         /// Perform a GET request and return the response as a deserialized object
@@ -27,6 +43,7 @@ namespace PostNLApi.Http
         /// <returns>Object deserialized to the generic type</returns>
         public async Task<T> Get<T>(string url)
         {
+            _client.WriteDebugMessage($"GET {url}");
             var response = await GetAsync(url);
             return await ProcessResponse<T>(response);
         }
@@ -50,16 +67,32 @@ namespace PostNLApi.Http
             }
 
             var json = JsonConvert.SerializeObject(data, _jsonSerializerSettings);
+            if (_client.EnableDebug)
+            {
+                var indentedJson = JsonConvert.SerializeObject(data, _jsonSerializerSettingsDebug);
+                _client.WriteDebugMessage($"POST {url}{Environment.NewLine}{indentedJson}");
+            }
+
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await PostAsync(url, content);
             return await ProcessResponse<T>(response);
         }
 
-        private static async Task<T> ProcessResponse<T>(HttpResponseMessage response)
+        private async Task<T> ProcessResponse<T>(HttpResponseMessage response)
         {
+            _client.WriteDebugMessage($"{(int)response.StatusCode} {response.ReasonPhrase}");
             var responseString = await response.Content.ReadAsStringAsync();
+            
+            if (responseString.StartsWith("{") || responseString.StartsWith("["))
+            {
+                responseString = JsonConvert.SerializeObject(JsonConvert.DeserializeObject(responseString), _jsonSerializerSettingsDebug);
+            }
+            
+            _client.WriteDebugMessage($"Response is {responseString.Length} characters long:{Environment.NewLine}{responseString}");
+
             if (!response.IsSuccessStatusCode)
             {
+                _client.WriteDebugMessage("Oh boy, not a success status code");
                 try
                 {
                     var serverError = JsonConvert.DeserializeObject<ServerError>(responseString);

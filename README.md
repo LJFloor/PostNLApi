@@ -15,6 +15,7 @@ var client = new PostNLClient("<apikey>", "<customer_code>", "<customer_number>"
 ```
 
 ## Basic shipment
+
 This is the bare minimum required to register a shipment
 
 ```csharp
@@ -51,7 +52,7 @@ var shipment = new Shipment
     ProductCodeDelivery = "3085",   // standard shipment
 };
 
-var response = await Client.Shipment.GenerateLabel(shipment);
+var response = await client.Shipment.GenerateLabel(shipment);
 ```
 
 > Note: PostNL has a [list of product codes](https://developer.postnl.nl/docs/#/http/reference-data/product-codes) to fill in the `ProductCodeLivery` field.
@@ -60,25 +61,34 @@ var response = await Client.Shipment.GenerateLabel(shipment);
 
 You can register multiple shipments at once:
 
-```cs
-var response = await Client.Shipment.GenerateLabel(shipments);
+```csharp
+var response = await client.Shipment.GenerateLabel(shipments);
 ```
 
 The PostNL API supports grouping different shipments together to form a multicollo if you ship to The Netherlands or Belgium. You can enable this in your request:
 
-```cs
-var response = await Client.Shipment.GenerateLabel(shipments, multicollo: true);
+```csharp
+var response = await client.Shipment.GenerateLabel(shipments, multicollo: true);
 ```
 
 This feature comes with a few notes:
 
-- This will group **ALL** shipments in that request together
+- This will group **ALL** shipments in that request together if possible
 - This will **OVERWRITE** any groups you manually defined
-- All sender addresses and all receiver addresses should match accross the shipments
-- If the destination country is not NL or BE, it will fallback to registering seperate shipments
+- All sender addresses and all receiver addresses should match across the shipments. It doesn't make sense to group shipments with different sender 
+  addresses or receiver addresses.
+
+## Debug mode
+
+You can enable debug mode to see the request and response from PostNL:
+
+```csharp
+client.EnableDebug = true;
+client.Debug += (s, e) => Console.WriteLine(e);
+```
 
 ## Supported countries
 
-Currently, the project supports creating shipments to countries that are in the EU. Non-EU shipments is being worked on, since customs is a bit tricky. 
+Currently, the project supports creating shipments to countries that are in the EU. Non-EU shipments is being worked on, since customs is a bit tricky.
 
 Though being able to send to EU countries will probably fit about 95% of all use cases.

@@ -16,6 +16,16 @@ namespace PostNLApi
         internal readonly string CustomerNumber;
 
         /// <summary>
+        /// Enable debug mode. This will log all requests and responses to the debug event
+        /// </summary>
+        public bool EnableDebug { get; set; }
+
+        /// <summary>
+        /// Event that is called when debug mode is enabled
+        /// </summary>
+        public event EventHandler<string> Debug;
+
+        /// <summary>
         /// Create a new PostNL client using your api key, customer code and customer number
         /// </summary>
         /// <param name="apiKey">Your PostNL api key</param>
@@ -25,39 +35,49 @@ namespace PostNLApi
         /// <exception cref="ArgumentException">You gave an invalid argument</exception>
         public PostNLClient(string apiKey, string customerCode, string customerNumber, bool sandbox = false)
         {
-            if (!Guid.TryParse(apiKey, out _))
+            if (!Guid.TryParse(apiKey.Trim(), out _))
             {
                 throw new ArgumentException("Invalid API key");
             }
 
-            if (!Regex.IsMatch(customerCode, "^[A-Z]{4}$"))
+            if (!Regex.IsMatch(customerCode.Trim(), "^[A-Z]{4}$"))
             {
                 throw new ArgumentException("Invalid customer code");
             }
 
-            if (!Regex.IsMatch(customerNumber, "^[0-9]{8}$"))
+            if (!Regex.IsMatch(customerNumber.Trim(), "^[0-9]{8}$"))
             {
                 throw new ArgumentException("Invalid customer number");
             }
 
-            CustomerCode = customerCode;
-            CustomerNumber = customerNumber;
+            CustomerCode = customerCode.Trim();
+            CustomerNumber = customerNumber.Trim();
             Sandbox = sandbox;
-            Http = new JsonHttpClient();
+            Http = new JsonHttpClient(this);
             Http.BaseAddress = new Uri(sandbox ? SandboxUrl : ProductionUrl);
-            Http.DefaultRequestHeaders.Add("apikey", apiKey);
+            Http.DefaultRequestHeaders.Add("apikey", apiKey.Trim());
         }
 
         /// <summary>
         /// Endpoint for shipments
         /// </summary>
         public ShipmentEndpoint Shipment => _shipmentEndpoint ?? (_shipmentEndpoint = new ShipmentEndpoint(this));
+
         private ShipmentEndpoint _shipmentEndpoint;
 
         /// <summary>
         /// Endpoint for barcodes
         /// </summary>
         public BarcodeEndpoint Barcode => _barcodeEndpoint ?? (_barcodeEndpoint = new BarcodeEndpoint(this));
+
         private BarcodeEndpoint _barcodeEndpoint;
+
+        internal void WriteDebugMessage(string e)
+        {
+            if (!EnableDebug) return;
+
+            var message = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] {e}";
+            Debug?.Invoke(this, message);
+        }
     }
 }
