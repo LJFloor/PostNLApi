@@ -159,12 +159,12 @@ namespace PostNLApi.Endpoints
                 content.HsTariffNr = content.HsTariffNr?.Replace(" ", "");
             }
 
-            foreach (var address in shipment.Addresses)
+            foreach (var address in shipment.Addresses ?? Array.Empty<Address>())
             {
                 address.Zipcode = address.Zipcode?.Replace(" ", "");
             }
             
-            foreach (var amount in shipment.Amounts)
+            foreach (var amount in shipment.Amounts ?? Array.Empty<Amount>())
             {
                 amount.Bic = amount.Bic?.Replace(" ", "").ToUpper();
                 amount.Iban = amount.Iban?.Replace(" ", "").ToUpper();
