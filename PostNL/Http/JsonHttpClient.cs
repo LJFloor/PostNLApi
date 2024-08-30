@@ -97,7 +97,10 @@ namespace PostNLApi.Http
 
             if (responseString.StartsWith("{") || responseString.StartsWith("["))
             {
-                responseString = JsonConvert.SerializeObject(JsonConvert.DeserializeObject(responseString), _jsonSerializerSettingsDebug);
+                responseString = JsonConvert.SerializeObject(JsonConvert.DeserializeObject(responseString), new JsonSerializerSettings()
+                {
+                    Formatting = Formatting.Indented
+                });
             }
 
             _client.WriteDebugMessage($"Response is {responseString.Length} characters long:{Environment.NewLine}{responseString}");

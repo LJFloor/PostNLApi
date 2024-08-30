@@ -153,7 +153,6 @@ namespace PostNLApi.Endpoints
 
         private static void SanitizeShipment(Shipment shipment)
         {
-            // trim HS codes and remove spaces
             foreach (var content in shipment.Customs?.Content ?? Array.Empty<Content>())
             {
                 content.HsTariffNr = content.HsTariffNr?.Replace(" ", "");
@@ -163,7 +162,7 @@ namespace PostNLApi.Endpoints
             {
                 address.Zipcode = address.Zipcode?.Replace(" ", "");
             }
-            
+
             foreach (var amount in shipment.Amounts ?? Array.Empty<Amount>())
             {
                 amount.Bic = amount.Bic?.Replace(" ", "").ToUpper();
@@ -174,11 +173,14 @@ namespace PostNLApi.Endpoints
             // Length, Width, Height values are about the order of the size and need to be filled in from the longest to the shortest value.
             // For example: shipment's official height is 700mm, width 500mm, length 300mm. The longest side (highest value) of 700mm needs to be entered at Length.
             // Width value becomes 500mm, Height value: 300mm (the lowest).
-            var values = new[] { shipment.Dimension.Length, shipment.Dimension.Width, shipment.Dimension.Height };
-            Array.Sort(values);
-            shipment.Dimension.Length = values[2];
-            shipment.Dimension.Width = values[1];
-            shipment.Dimension.Height = values[0];
+            if (shipment.Dimension != null)
+            {
+                var values = new[] { shipment.Dimension.Length, shipment.Dimension.Width, shipment.Dimension.Height };
+                Array.Sort(values);
+                shipment.Dimension.Length = values[2];
+                shipment.Dimension.Width = values[1];
+                shipment.Dimension.Height = values[0];
+            }
         }
 
         private static void ValidateRequest(LabelRequest request)
@@ -191,7 +193,7 @@ namespace PostNLApi.Endpoints
                 var groupedByType = request.Shipments.SelectMany(x => x.Addresses).GroupBy(x => x.AddressType);
                 foreach (var address in groupedByType)
                 {
-                    var areTheSame = address.Select(x => JsonConvert.SerializeObject(x)).Distinct().Count() == 1;
+                    var areTheSame = address.Select(JsonConvert.SerializeObject).Distinct().Count() == 1;
                     if (!areTheSame)
                         throw new ValidationException("For multicollo shipment, addresses with the same address type must have the same address details");
                 }
