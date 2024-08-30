@@ -42,9 +42,11 @@ namespace PostNLApi.Http
 
         public JsonHttpClient(PostNLClient client)
         {
+            var productVersion = typeof(PostNLClient).Assembly.GetName().Version;
+            
             _client = client;
             DefaultRequestHeaders.Add("Accept", "application/json");
-            DefaultRequestHeaders.Add("User-Agent", "PostNLApi/v1.0.0");
+            DefaultRequestHeaders.Add("User-Agent", $"PostNLApi/v{productVersion}");
         }
 
         /// <summary>

@@ -15,6 +15,7 @@
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <AssemblyName>PostNLApi</AssemblyName>
         <RootNamespace>PostNLApi</RootNamespace>
+        <Version>0.1</Version>
     </PropertyGroup>
 
     <ItemGroup>
