@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace PostNLApi.Models.Request
 {
@@ -20,6 +21,7 @@ namespace PostNLApi.Models.Request
         /// </summary>
         /// <remarks>See Printer types for the available printer types.</remarks>
         [Required]
+        [JsonProperty("Printertype")]
         public string PrinterType { get; set; } = "GraphicFile|PDF";
     }
 }
