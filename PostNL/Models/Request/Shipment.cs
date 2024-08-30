@@ -13,13 +13,13 @@ namespace PostNLApi.Models.Request
         /// </summary>
         /// <remarks>At least 1 address type is mandatory. See Address types for the available types.</remarks>
         [Required]
-        public List<Address> Addresses { get; set; } = new List<Address>();
+        public Address[] Addresses { get; set; }
 
         /// <summary>
         /// List of amount types. An amount represents a value of the shipment. Amount type 01 mandatory for COD-shipments, Amount type 02 mandatory for domestic insured shipments.
         /// </summary>
         /// <remarks>https://developer.postnl.nl/docs/#/http/reference-data/reference-codes/amount-types</remarks>
-        public List<Amount> Amounts { get; set; } = new List<Amount>();
+        public Amount[] Amounts { get; set; }
 
         /// <summary>
         /// Barcode of the shipment. This is a unique value
@@ -53,7 +53,7 @@ namespace PostNLApi.Models.Request
         /// One or more ContactType elements belonging to a shipment.
         /// </summary>
         /// <remarks>Mandatory in some cases.</remarks>
-        public IEnumerable<Contact> Contacts { get; set; } = new List<Contact>();
+        public Contact[] Contacts { get; set; }
 
         /// <summary>
         /// Content of the shipment
@@ -96,12 +96,24 @@ namespace PostNLApi.Models.Request
         public Dimension Dimension { get; set; }
 
         /// <summary>
-        /// Product code of the shipment. See the https://developer.postnl.nl/docs/#/http/reference-data/product-codes for possible products.
+        /// Barcode of the downstream network partner of PostNL Parcels.
         /// </summary>
-        /// <example>3085</example>
-        [RegularExpression(@"^\d{4,5}$", ErrorMessage = "Product code must be 4 or 5 digits")]
-        [Required]
-        public string ProductCodeDelivery { get; set; }
+        /// <remarks>Mandatory for requesting Parcels Non-EU combilabel product codes.</remarks>
+        [MaxLength(35)]
+        public string DownPartnerBarcode { get; set; }
+
+        /// <summary>
+        /// Identification of the downstream network partner of PostNL Pakketten.
+        /// </summary>
+        [MaxLength(50)]
+        [JsonProperty("DownPartnerID")]
+        public string DownPartnerId { get; set; }
+
+        /// <summary>
+        /// Identification of the location of the downstream network partner of PostNL Pakketten.
+        /// </summary>
+        [MaxLength(10)]
+        public string DownPartnerLocation { get; set; }
 
         /// <summary>
         /// List of 0 or more Group types with data, grouping multiple shipments together.
@@ -110,19 +122,29 @@ namespace PostNLApi.Models.Request
         public Group[] Groups { get; set; }
 
         /// <summary>
+        /// Array of hazardous materials contained in the shipment
+        /// </summary>
+        public HazardousMaterial[] HazardousMaterial { get; set; }
+
+        /// <summary>
+        /// Collection product code of a shipment.
+        /// </summary>
+        [Obsolete]
+        public string ProductCodeCollect { get; set; }
+
+        /// <summary>
+        /// Product code of the shipment. See the https://developer.postnl.nl/docs/#/http/reference-data/product-codes for possible products.
+        /// </summary>
+        /// <example>3085</example>
+        [RegularExpression(@"^\d{4,5}$", ErrorMessage = "Product code must be 4 or 5 digits")]
+        [Required]
+        public string ProductCodeDelivery { get; set; }
+
+        /// <summary>
         /// Product options for the shipment
         /// </summary>
         /// <remarks>mandatory for certain products</remarks>
-        public List<ProductOption> ProductOptions { get; set; } = new List<ProductOption>();
-
-        /// <summary>
-        /// Date of birth.
-        /// </summary>
-        /// <remarks>Mandatory for Age check products</remarks>
-        /// <example>08-08-2003</example>
-        [RegularExpression(@"^([0-3]\d-[01]\d-[12]\d{3})$")]
-        [JsonProperty("receiver_date_of_birth")]
-        public string ReceiverDateOfBirth { get; set; }
+        public ProductOption[] ProductOptions { get; set; }
 
         /// <summary>
         /// Your own reference of the shipment. This can be an invoice number or order number for example.
@@ -131,14 +153,41 @@ namespace PostNLApi.Models.Request
         public string Reference { get; set; }
 
         /// <summary>
+        /// Additional reference of the collect order of the shipment
+        /// </summary>
+        public string ReferenceCollect { get; set; }
+
+        /// <summary>
         /// Remark for the shipment
         /// </summary>
         public string Remark { get; set; }
 
         /// <summary>
-        /// Possibility to provide extra key-value pairs to the webservice.
+        /// Return barcode of the shipment.
         /// </summary>
-        [Obsolete("Not used at the moment")]
-        public List<KeyValuePair<string, string>> ExtraFields { get; set; } = new List<KeyValuePair<string, string>>();
+        /// <remarks>
+        /// PostNL will provide you with a separate customer code specifically for generating the returnBarcode.
+        /// Mandatory for Label in the Box (return label) shipments.
+        /// </remarks>
+        public string ReturnBarcode { get; set; }
+
+        /// <summary>
+        /// Return reference of the shipment
+        /// </summary>
+        public string ReturnReference { get; set; }
+
+        /// <summary>
+        /// ID of the chosen timeslot as returned by the timeslot webservice
+        /// </summary>
+        [Obsolete]
+        public string TimeSlotId { get; set; }
+
+        /// <summary>
+        /// Date of birth.
+        /// </summary>
+        /// <remarks>Mandatory for Age check products</remarks>
+        /// <example>08-08-2003</example>
+        [RegularExpression(@"^([0-3]\d-[01]\d-[12]\d{3})$")]
+        public string ReceiverDateOfBirth { get; set; }
     }
 }
