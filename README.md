@@ -61,7 +61,7 @@ foreach (var label in response.ResponseShipments.SelectMany(x => x.Labels))
 }
 ```
 
-> Note: PostNL has a [list of product codes](https://developer.postnl.nl/docs/#/http/reference-data/product-codes) to fill in the `ProductCodeLivery` field.
+> Note: PostNL has a [list of product codes](https://developer.postnl.nl/docs/#/http/reference-data/product-codes) to fill in the `ProductCodeDelivery` field.
 
 ## Multicollo
 
@@ -114,7 +114,7 @@ The PostNL API is quite strict on the data you send. Also, the API error message
 For these reasons a lot of fields are checked before sending the request to PostNL. This way a lot of low-hanging fruit
 can be caught. Think about catching invalid zipcodes, invalid country codes, etc.
 
-If you get a `ValidationException`, it means that the data you sent is not correct. The exception message will contain more
+If you get a `ValidationException`, it probably means you have an error in the data you sent. The exception message will contain more
 information on what went wrong.
 
 ```csharp
@@ -128,7 +128,7 @@ catch (ValidationException ex)
 }
 ```
 
-If you get a `ValidationException` and you are sure the data is correct, please open an issue.
+If you get a `ValidationException` and you are sure the data is correct, please [open an issue](https://github.com/LJFloor/PostNLApi/issues).
 
 ### My shipment is not converting to a multicollo
 

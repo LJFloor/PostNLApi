@@ -7,7 +7,6 @@
         <Title>PostNLApi</Title>
         <Authors>LJFloor</Authors>
         <Description>A package to register PostNL shipments (including multicollo)</Description>
-        <PackageProjectUrl></PackageProjectUrl>
         <PackageIcon>postnl-logo.png</PackageIcon>
         <RepositoryUrl>https://github.com/LJFloor/PostNLApi</RepositoryUrl>
         <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -15,7 +14,7 @@
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <AssemblyName>PostNLApi</AssemblyName>
         <RootNamespace>PostNLApi</RootNamespace>
-        <Version>0.1</Version>
+        <Version>0.2</Version>
     </PropertyGroup>
 
     <ItemGroup>
@@ -28,7 +27,6 @@
     <ItemGroup>
       <None Update="postnl-logo.png">
         <Pack>True</Pack>
-        <PackagePath></PackagePath>
       </None>
       <None Include="..\README.md" Pack="true" PackagePath="\"/>
     </ItemGroup>
