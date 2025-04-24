@@ -11,7 +11,6 @@ namespace PostNLApi
         private const string SandboxUrl = "https://api-sandbox.postnl.nl";
 
         internal readonly JsonHttpClient Http;
-        internal readonly bool Sandbox;
         internal readonly string CustomerCode;
         internal readonly string CustomerNumber;
 
@@ -47,7 +46,6 @@ namespace PostNLApi
 
             CustomerCode = customerCode.Trim();
             CustomerNumber = customerNumber.Trim();
-            Sandbox = sandbox;
             Http = new JsonHttpClient(this);
             Http.BaseAddress = new Uri(sandbox ? SandboxUrl : ProductionUrl);
             Http.DefaultRequestHeaders.Add("apikey", apiKey.Trim());
