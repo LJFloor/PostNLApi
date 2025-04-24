@@ -35,11 +35,6 @@ namespace PostNLApi
         /// <exception cref="ArgumentException">You gave an invalid argument</exception>
         public PostNLClient(string apiKey, string customerCode, string customerNumber, bool sandbox = false)
         {
-            if (!Guid.TryParse(apiKey.Trim(), out _))
-            {
-                throw new ArgumentException("Invalid API key");
-            }
-
             if (!Regex.IsMatch(customerCode.Trim(), "^[A-Z]{4}$"))
             {
                 throw new ArgumentException("Invalid customer code");
