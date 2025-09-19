@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using ImageMagick;
 using Newtonsoft.Json;
 using PostNLApi.Models.Request;
 using PostNLApi.Models.Response;
@@ -135,16 +134,6 @@ namespace PostNLApi.Endpoints
 
         private static void SanitizeRequest(LabelRequest request)
         {
-            if (request.LabelSignature?.Length > 0)
-            {
-                var image = new MagickImage(request.LabelSignature);
-
-                image.Resize(1058, 226);
-                image.Format = MagickFormat.Gif;
-                request.LabelSignature = image.ToByteArray();
-                image.Dispose();
-            }
-
             foreach (var shipment in request.Shipments)
             {
                 SanitizeShipment(shipment);

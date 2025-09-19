@@ -6,7 +6,7 @@
         <Nullable>disable</Nullable>
         <Title>PostNLApi</Title>
         <Authors>LJFloor</Authors>
-        <Description>A package to register PostNL shipments (including multicollo)</Description>
+        <Description>A package to register PostNL shipments to within the EU (including multicollo for NL and BE)</Description>
         <PackageIcon>postnl-logo.png</PackageIcon>
         <RepositoryUrl>https://github.com/LJFloor/PostNLApi</RepositoryUrl>
         <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -14,11 +14,11 @@
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <AssemblyName>PostNLApi</AssemblyName>
         <RootNamespace>PostNLApi</RootNamespace>
-        <Version>0.2</Version>
+        <Version>0.3</Version>
+        <PackageProjectUrl>https://github.com/LJFloor/PostNLApi</PackageProjectUrl>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="13.10.0" />
       <PackageReference Include="MiniValidation" Version="0.9.1" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
       <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />

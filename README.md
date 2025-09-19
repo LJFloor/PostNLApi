@@ -143,16 +143,6 @@ The PostNL API expects the dimensions in the order of `length`, `width`, `height
 Before sending the shipment, the dimensions are automatically reordered to match the PostNL API requirements.
 More info: https://developer.postnl.nl/docs/#/http/models/structures/dimension
 
-### What is the Magick.NET dependency used for?
-
-The Magic.NET library is for resizing and converting your signature you set for customs to GIF. This is a requirement from PostNL. This way you don't have to deal with this, and
-can simply set any image you want.
-
-```csharp
-var signature = await File.ReadAllBytesAsync("C:\\Temp\\signature.png");
-await client.Shipment.GenerateLabel(shipment, labelSignature: signature);
-```
-
 ### I have a question or found a bug
 
 Please open an issue on GitHub. I will try to respond as soon as possible.
